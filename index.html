@@ -11,17 +11,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Tammudu" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
 <body><audio id="background_audio" autoplay="true" loop="loop">
         <source src="Audio/flute.mp3">
-If you are reading this, it is because your browser does not support the audio element.
-</audio>
+        If you are reading this, it is because your browser does not support the audio element.
+    </audio>
 
-<button   onclick="mute()">
-    <i class="fa fa-music">mute</i></button>
-    
+    <button id= "button" class="button" onclick="mute()">
+        <img src="images/sound_delete (1).png" alt=""></button>
+
 
 
     <div id="game" class="game">
@@ -69,7 +70,7 @@ If you are reading this, it is because your browser does not support the audio e
         //make a var wrong letters and wrong alphabet to display in wrong letters div//
         var wrongLetters = [];
         var wrongAlphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-       
+
         //determine which length blank matches wordlegth of computer choice//
         for (i = 0; i < blank.length; i++) {
             if (blank[i].length === wordLength) {
@@ -79,14 +80,14 @@ If you are reading this, it is because your browser does not support the audio e
             }
         }
 
-// start game with button press//
+        // start game with button press//
         document.onkeyup = function (event) {
             // hide begin play//
             beginText.textContent = "";
             var userGuess = (event.key.toLowerCase())
             //identify where the user guess is in relation to character of computerChoice//
             var valueChoice = computerchoice.indexOf(userGuess);
-            
+
             // if user guess is equal to character at a certain spot in computerChoice, then replace corresponding blank space//
             for (j = 0; j < computerchoice.length; j++) {
                 if (userGuess === computerchoice[j]) {
@@ -96,9 +97,9 @@ If you are reading this, it is because your browser does not support the audio e
                     }
 
                     var blankChoice = document.getElementById("blanktext").innerHTML;
-                   // console.log(blankChoice[valueChoice]);
+                    // console.log(blankChoice[valueChoice]);
 
-                   // create variable of new and changing  guess//
+                    // create variable of new and changing  guess//
                     var res = blankChoice.replaceAt(valueChoice, userGuess);
 
                     //console.log(res);
@@ -107,20 +108,20 @@ If you are reading this, it is because your browser does not support the audio e
                 }
             }
 
-                // i needed a way to add wrong letters without doing it every time i looped//
+            // i needed a way to add wrong letters without doing it every time i looped//
 
             for (k = 0; k < wrongAlphabet.length; k++) {
                 if ((userGuess === wrongAlphabet[k]) && (userGuess != computerchoice[valueChoice])) {
                     wrongLetters.push(wrongAlphabet[k]);
                     document.getElementById("wrong").innerHTML = wrongLetters;
 
-                        // you lose if you guess wrong 6 times//
+                    // you lose if you guess wrong 6 times//
                     if (wrongLetters.length === 6) {
 
                         blanktext.textContent = (computerchoice);
                         document.getElementById("begin").innerHTML = ("You have lost! Hit enter to start new game.")
                         document.onkeyup = function (event) {
-                                // enter produces new variable computerChoice i couldn't figue out how to restart my code//
+                            // enter produces new variable computerChoice i couldn't figue out how to restart my code//
                             if (event.keyCode === 13) {
                                 computerchoice = words[Math.floor(Math.random() * words.length)];
                                 console.log(computerchoice);
@@ -140,7 +141,7 @@ If you are reading this, it is because your browser does not support the audio e
 
 
             }
-// if you win this happens//
+            // if you win this happens//
             if (res === computerchoice) {
                 beginText.textContent = ("You are a winner!!")
                 wins++
@@ -151,14 +152,14 @@ If you are reading this, it is because your browser does not support the audio e
 
         }
         // i started trying to add background music//
-  function mute(){
-          if(background_audio.muted == false){
-            background_audio.muted = true;
-          } else {
-            background_audio.muted = false;
-          }
+        function mute() {
+            if (background_audio.muted == false) {
+                background_audio.muted = true;
+            } else {
+                background_audio.muted = false;
+            }
 
-}
+        }
 
 
     </script>
