@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Tammudu" rel="stylesheet">
+
+</head>
+
+<body>
+    <button class="btn">sound
+
+    </button>
+
+
+    <div id="game" class="game">
+        <div class="jumbotron dark jumbotron-fluid" id="jumbo">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-7">
+                        <h1 class="display-5">Farm Animal Guess</h1>
+                        <p class="lead" id="begin">Press any key to begin playing!</p>
+                        <h4 id="wins">wins:</h4>
+                        <p id="blanktext"></p>
+                        <strong id="wrongHead">Wrong Letters
+                            <p id="wrong"></p>
+                        </strong>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <img id="gimage" src="images/question-mark-nothing.png" alt="" sizes="auto" srcset="">
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <script>
+        var winsText = document.getElementById("wins");
+        var wins = 0;
+        var beginText = document.getElementById("begin");
+        var words = ["c a t", "m o u s e", "d o g", "c o w", "p i g", "h o r s e", "d u c k", "h e n", "s n a k e", "g o a t", "r a t",]
+        var blank = ["_ _ _", "_ _ _ _", "_ _ _ _ _", "_ _ _ _ _ _ _"]
+        var blanktext = document.getElementById("blanktext");
+        var computerchoice = words[Math.floor(Math.random() * words.length)];
+        // determine how many character spaces the computer choice has
+        var wordLength = computerchoice.length;
+        var wrongLetters = [];
+        var wrongAlphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+        console.log(computerchoice);
+        //determine which length blank matches wordlegth of computer choice
+        for (i = 0; i < blank.length; i++) {
+            if (blank[i].length === wordLength) {
+                var blankChoice = blank[i];
+                blanktext.textContent = blankChoice;
+                console.log(blankChoice);
+            }
+        }
+
+
+        document.onkeyup = function (event) {
+            beginText.textContent = "";
+            var userGuess = (event.key.toLowerCase())
+            //identify where the user guess is in relation to character of computer choice
+            var valueChoice = computerchoice.indexOf(userGuess);
+            console.log(valueChoice);
+            // ive fixed this to show the right letter and not loop my push
+            for (j = 0; j < computerchoice.length; j++) {
+                if (userGuess === computerchoice[j]) {
+
+                    String.prototype.replaceAt = function (index, replacement) {
+                        return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+                    }
+
+                    var blankChoice = document.getElementById("blanktext").innerHTML;
+                    console.log(blankChoice[valueChoice]);
+                    var res = blankChoice.replaceAt(valueChoice, userGuess);
+
+                    console.log(res);
+                    document.getElementById("blanktext").innerHTML = res;
+
+                }
+            }
+
+
+
+            for (k = 0; k < wrongAlphabet.length; k++) {
+                if ((userGuess === wrongAlphabet[k]) && (userGuess != computerchoice[valueChoice])) {
+                    wrongLetters.push(wrongAlphabet[k]);
+                    document.getElementById("wrong").innerHTML = wrongLetters;
+
+
+                    if (wrongLetters.length === 6) {
+
+                        blanktext.textContent = (computerchoice);
+                        document.getElementById("begin").innerHTML = ("You have lost! Hit enter to start new game.")
+                        document.onkeyup = function (event) {
+
+                            if (event.keyCode === 13) {
+                                computerchoice = words[Math.floor(Math.random() * words.length)];
+                                console.log(computerchoice);
+                                function myfuncion() {
+                                    document.getElementById("blanktext").innerHTML.reset();
+                                    console.log(computerchoice);
+                                }
+
+                            }
+                        }
+                    }
+
+
+
+                }
+
+
+
+            }
+
+            if (res === computerchoice) {
+                beginText.textContent = ("You are a winner!!")
+                wins++
+                winsText.textContent = ("Wins: " + wins)
+
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //replace spot in blank[i] with letter with letteruserguess equal to compchoice.charat[j]
+
+
+
+
+
+
+            //html becomes hidden response if correct blank space becomes filled//
+            //if blank space has equal characters as computerchoice display blank.
+            //if userguess is equal to .char at valueChoice replace userguess to blank.indexof(valueChoice)
+
+
+
+
+
+        //console.log(words[1].charAt(0));
+        // capture event that player has pressed key and display new html wins theme and space for wrong letters//
+        // create array of words to guess. create array of blank spaces 
+        // computer chooses at random word (math random math floor looping through array)
+        // variable blank space.length equal to computerchoice.length is displayed//
+        // if player choice is equal to letter in computer choice display letter in equal spot  on blank space variable
+        // else display letter in section wrong pushletters to variable wrong
+        // variable wrong equals 3 reset
+        //if variable blank space equals computerchoice display win and reset//
+
+
+
+
+
+
+
+        //
+
+    </script>
+
+</body>
+
+</html>
