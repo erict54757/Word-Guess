@@ -14,10 +14,14 @@
 
 </head>
 
-<body>
-    <button class="btn">sound
+<body><audio id="background_audio" autoplay="true" loop="loop">
+        <source src="Audio/flute.mp3">
+If you are reading this, it is because your browser does not support the audio element.
+</audio>
 
-    </button>
+<button   onclick="mute()">
+    <i class="fa fa-music">mute</i></button>
+    
 
 
     <div id="game" class="game">
@@ -50,19 +54,23 @@
 
 
     <script>
+        //some of these variables do not need to be global//
         var winsText = document.getElementById("wins");
         var wins = 0;
         var beginText = document.getElementById("begin");
+        // here i arrayed my word choices with correspondingly length blank space arrays (the array characters are spaced)//
         var words = ["c a t", "m o u s e", "d o g", "c o w", "p i g", "h o r s e", "d u c k", "h e n", "s n a k e", "g o a t", "r a t",]
         var blank = ["_ _ _", "_ _ _ _", "_ _ _ _ _", "_ _ _ _ _ _ _"]
         var blanktext = document.getElementById("blanktext");
+        // choose my random word from my word array//
         var computerchoice = words[Math.floor(Math.random() * words.length)];
-        // determine how many character spaces the computer choice has
+        // determine how many character spaces the computeChoice has//
         var wordLength = computerchoice.length;
+        //make a var wrong letters and wrong alphabet to display in wrong letters div//
         var wrongLetters = [];
         var wrongAlphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-        console.log(computerchoice);
-        //determine which length blank matches wordlegth of computer choice
+       
+        //determine which length blank matches wordlegth of computer choice//
         for (i = 0; i < blank.length; i++) {
             if (blank[i].length === wordLength) {
                 var blankChoice = blank[i];
@@ -71,14 +79,15 @@
             }
         }
 
-
+// start game with button press//
         document.onkeyup = function (event) {
+            // hide begin play//
             beginText.textContent = "";
             var userGuess = (event.key.toLowerCase())
-            //identify where the user guess is in relation to character of computer choice
+            //identify where the user guess is in relation to character of computerChoice//
             var valueChoice = computerchoice.indexOf(userGuess);
-            console.log(valueChoice);
-            // ive fixed this to show the right letter and not loop my push
+            
+            // if user guess is equal to character at a certain spot in computerChoice, then replace corresponding blank space//
             for (j = 0; j < computerchoice.length; j++) {
                 if (userGuess === computerchoice[j]) {
 
@@ -87,29 +96,31 @@
                     }
 
                     var blankChoice = document.getElementById("blanktext").innerHTML;
-                    console.log(blankChoice[valueChoice]);
+                   // console.log(blankChoice[valueChoice]);
+
+                   // create variable of new and changing  guess//
                     var res = blankChoice.replaceAt(valueChoice, userGuess);
 
-                    console.log(res);
+                    //console.log(res);
                     document.getElementById("blanktext").innerHTML = res;
 
                 }
             }
 
-
+                // i needed a way to add wrong letters without doing it every time i looped//
 
             for (k = 0; k < wrongAlphabet.length; k++) {
                 if ((userGuess === wrongAlphabet[k]) && (userGuess != computerchoice[valueChoice])) {
                     wrongLetters.push(wrongAlphabet[k]);
                     document.getElementById("wrong").innerHTML = wrongLetters;
 
-
+                        // you lose if you guess wrong 6 times//
                     if (wrongLetters.length === 6) {
 
                         blanktext.textContent = (computerchoice);
                         document.getElementById("begin").innerHTML = ("You have lost! Hit enter to start new game.")
                         document.onkeyup = function (event) {
-
+                                // enter produces new variable computerChoice i couldn't figue out how to restart my code//
                             if (event.keyCode === 13) {
                                 computerchoice = words[Math.floor(Math.random() * words.length)];
                                 console.log(computerchoice);
@@ -129,7 +140,7 @@
 
 
             }
-
+// if you win this happens//
             if (res === computerchoice) {
                 beginText.textContent = ("You are a winner!!")
                 wins++
@@ -139,53 +150,16 @@
 
 
         }
+        // i started trying to add background music//
+  function mute(){
+          if(background_audio.muted == false){
+            background_audio.muted = true;
+          } else {
+            background_audio.muted = false;
+          }
 
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //replace spot in blank[i] with letter with letteruserguess equal to compchoice.charat[j]
-
-
-
-
-
-
-            //html becomes hidden response if correct blank space becomes filled//
-            //if blank space has equal characters as computerchoice display blank.
-            //if userguess is equal to .char at valueChoice replace userguess to blank.indexof(valueChoice)
-
-
-
-
-
-        //console.log(words[1].charAt(0));
-        // capture event that player has pressed key and display new html wins theme and space for wrong letters//
-        // create array of words to guess. create array of blank spaces 
-        // computer chooses at random word (math random math floor looping through array)
-        // variable blank space.length equal to computerchoice.length is displayed//
-        // if player choice is equal to letter in computer choice display letter in equal spot  on blank space variable
-        // else display letter in section wrong pushletters to variable wrong
-        // variable wrong equals 3 reset
-        //if variable blank space equals computerchoice display win and reset//
-
-
-
-
-
-
-
-        //
 
     </script>
 
