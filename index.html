@@ -42,7 +42,7 @@
                         <div class="row">
                             <img id="gimage" src="images/question-mark-nothing.png" alt="" sizes="auto" srcset="">
                         </div>
-                        <textarea id="alpha"></textarea>
+                      
 
                     </div>
 
@@ -55,12 +55,7 @@
 
 
     <script>
-        $(document).ready(function(){
-            $("#alpha")
-	.keyboard({ layout: "alpha" })
-	.addTyping();
-
-        })
+      
       
         //some of these variables do not need to be global//
         var winsText = document.getElementById("wins");
@@ -68,7 +63,7 @@
         var beginText = document.getElementById("begin");
         var alphaText = document.getElementById("alpha");
         document.onkeyup = function (event) {
-            alphaText.textContent="";
+            
             beginText.textContent = "";
 
 
@@ -97,7 +92,7 @@
             // start game with button press//
             var reset = document.onkeyup = function (event) {
                 // hide begin play//
-
+                beginText.textContent = ("")
                 var userGuess = (event.key.toLowerCase())
                 //identify where the user guess is in relation to character of computerChoice//
                 var valueChoice = computerchoice.indexOf(userGuess);
